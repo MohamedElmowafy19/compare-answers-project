@@ -1,0 +1,76 @@
+{% extends "layout.html" %}
+{% block title %}Create New Exam{% endblock %}
+{% block content %}
+<div class="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">
+    <div class="sm:mx-auto sm:w-full sm:max-w-sm mb-4">
+      <h2 class="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">Create New Exam</h2>
+    </div>
+  
+    <div class="border border-gray-200 rounded-lg shadow p-4 bg-gray-50">
+        {% if error %}
+        <div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50" role="alert">
+            <span class="font-medium">Error!</span> {{ error }}.
+          </div>
+        {% endif %}
+      <form class="space-y-6" action="/create-exam" method="POST" x-data="{
+          countQuestions: 1
+      }">
+      <div class="p-4 bg-white border border-gray-200 rounded-lg shadow">
+        <div>
+          <label for="name" class="block text-sm font-medium leading-6 text-gray-900">Name of the exam</label>
+          <div class="mt-2">
+            <input name="name" type="text" required class="block w-full rounded-md border-0 px-3 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+          </div>
+        </div>
+
+        <div class="mt-4">
+          <label for="questions" class="block text-sm font-medium leading-6 text-gray-900">Number of questions for the exam</label>
+          <div class="mt-2">
+            <input name="questions" value="1" type="number" required min="1" class="block w-full rounded-md border-0 px-3 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+          </div>
+        </div>
+        
+        <div class="mt-4">
+          <label for="duration" class="block text-sm font-medium leading-6 text-gray-900">Exam time in minutes</label>
+          <div class="mt-2">
+            <input name="duration" value="60" type="number" required min="1" class="block w-full rounded-md border-0 px-3 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+          </div>
+        </div>
+
+        <div class="mt-4">
+          <label for="countQuestions" class="block text-sm font-medium leading-6 text-gray-900">Number of all questions</label>
+          <div class="mt-2">
+            <input x-model.number="countQuestions"  type="number" required min="1" class="block w-full rounded-md border-0 px-3 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+          </div>
+        </div>
+      </div>
+
+        <hr>
+        
+        <template x-for="i in countQuestions" :key="i">
+        <section class="bg-gray-100 min-h-full border border-gray-200 rounded-lg p-4 shadow">
+          <div>
+            <div>
+              <label for="Question" class="block text-sm font-medium leading-6 text-gray-900 py-2">Question</label>
+              <div class="mt-2">
+                <input name="question[]" type="text" required class="block w-full rounded-md border-0 px-3 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+              </div>
+            </div>
+
+            <div>
+              <label for="Answer" class="block text-sm font-medium leading-6 text-gray-900 py-2">Answer</label>
+              <div class="mt-2">
+                <input name="answer[]" type="text" required class="block w-full rounded-md border-0 px-3 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+              </div>
+            </div>
+          </div>
+        </section>
+        </template>
+
+        <div>
+          <button type="submit" class="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Submit</button>
+        </div>
+      </form>
+    </div>
+  </div>
+{% endblock %}

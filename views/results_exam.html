@@ -1,0 +1,57 @@
+{% extends "layout.html" %}
+{% block title %}Exam results{% endblock %}
+{% block content %}
+<div class="absolute inset-x-0 -top-40 -z-10 transform-gpu overflow-hidden blur-3xl sm:-top-80" aria-hidden="true">
+    <div class="relative left-[calc(50%-11rem)] aspect-[1155/678] w-[36.125rem] -translate-x-1/2 rotate-[30deg] bg-gradient-to-tr from-[#ff80b5] to-[#9089fc] opacity-30 sm:left-[calc(50%-30rem)] sm:w-[72.1875rem]" style="clip-path: polygon(74.1% 44.1%, 100% 61.6%, 97.5% 26.9%, 85.5% 0.1%, 80.7% 2%, 72.5% 32.5%, 60.2% 62.4%, 52.4% 68.1%, 47.5% 58.3%, 45.2% 34.5%, 27.5% 76.7%, 0.1% 64.9%, 17.9% 100%, 27.6% 76.8%, 76.1% 97.7%, 74.1% 44.1%)"></div>
+  </div>
+<div class="mx-auto py-32 sm:py-48 lg:py-56 bg-white min-h-full rounded-lg p-4 shadow">
+    <div class="hidden sm:mb-8 sm:flex sm:justify-center">
+        <h1 class="text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl">{{ exam[1] }} Exam</h1>
+      </div>
+    <hr>
+      <div class="hidden mb-2 sm:flex sm:justify-center mt-2">
+        <button 
+        class="rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+        onclick="html2pdf(document.getElementById('element-to-print'))">
+        PDF
+        </button>
+    </div>
+    <hr>
+    <div>
+        <div class="relative overflow-x-auto shadow-md sm:rounded-lg shadow p-4 bg-gray-100">
+            <table class="w-full text-sm text-left text-gray-500" id="element-to-print">
+                <caption class="text-2xl font-bold tracking-tight mb-8">Results of Exam ({{ exam[1] }})</caption>
+                <thead class="text-xs text-gray-700 uppercase bg-gray-50">
+                    <tr>
+                        <th class="px-6 py-3 text-center">Student</th>
+                        <th class="px-6 py-3 text-center">Mark</th>
+                        <th class="px-6 py-3 text-center">Full mark</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    {% if exam_results %}
+                        {% for exam_result in exam_results %}
+                            <tr class="odd:bg-white even:bg-gray-50">
+                                <td class="px-6 py-4 text-center font-medium text-gray-900 whitespace-nowrap">
+                                    <span class="bg-blue-100 text-blue-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded">{{ exam_result[8] }}</span>
+                                </td>
+                                <td class="px-6 py-4 text-center font-medium text-gray-900 whitespace-nowrap">
+                                    <span class="bg-blue-100 text-blue-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded">{{ exam_result[5] }}</span>
+                                </td>
+                                <td class="px-6 py-4 text-center font-medium text-gray-900 whitespace-nowrap">
+                                    <span class="bg-blue-100 text-blue-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded">{{ exam_result[6] }}</span>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    {% else %}
+                        <tr class="text-center w-full">
+                            <td colspan="4" class="px-6 py-4">There are no results of exam now.</td>
+                        </tr>
+                    {% endif %}
+                </tbody>
+            </table>
+          </div>
+    </div>
+  </div>
+{% endblock %}
